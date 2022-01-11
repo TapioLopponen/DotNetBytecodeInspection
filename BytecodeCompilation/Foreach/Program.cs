@@ -14,7 +14,7 @@ namespace BytecodeCompilation
         private static int SumCollection(Collection<int> collection)
         {
             var sum = 0;
-            foreach (var value in collection)
+            foreach(var value in collection)
             {
                 sum += value;
             }
@@ -24,7 +24,7 @@ namespace BytecodeCompilation
         private static int SumLinkedList(LinkedList<int> list)
         {
             var sum = 0;
-            foreach (var value in list)
+            foreach(var value in list)
             {
                 sum += value;
             }

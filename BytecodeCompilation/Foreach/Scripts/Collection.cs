@@ -47,6 +47,7 @@
                     m_value = m_target[m_index++];
                     return true;
                 }
+                m_value = default;
                 return false;
             }
 

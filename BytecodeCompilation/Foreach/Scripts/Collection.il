@@ -45,7 +45,7 @@
 		{
 			// Method begins at RVA 0x21a0
 			// Header size: 12
-			// Code size: 57 (0x39)
+			// Code size: 69 (0x45)
 			.maxstack 5
 			.locals init (
 				[0] int32
@@ -78,15 +78,19 @@
 			IL_0035: ldc.i4.1
 			IL_0036: ret
 
+			// m_value = default(T);
+			IL_0037: ldarg.0
+			IL_0038: ldflda !0 valuetype BytecodeCompilation.Collection`1/Enumerator<!T>::m_value
+			IL_003d: initobj !T
 			// return false;
-			IL_0037: ldc.i4.0
-			IL_0038: ret
+			IL_0043: ldc.i4.0
+			IL_0044: ret
 		} // end of method Enumerator::MoveNext
 
 		.method public hidebysig specialname 
 			instance !T get_Current () cil managed 
 		{
-			// Method begins at RVA 0x21e5
+			// Method begins at RVA 0x21f1
 			// Header size: 1
 			// Code size: 7 (0x7)
 			.maxstack 8
