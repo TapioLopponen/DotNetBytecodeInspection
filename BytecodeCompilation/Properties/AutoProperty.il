@@ -19,6 +19,7 @@
 		// Code size: 7 (0x7)
 		.maxstack 8
 
+		// return <Value>k__BackingField;
 		IL_0000: ldarg.0
 		IL_0001: ldfld int32 AutoPropertyExample::'<Value>k__BackingField'
 		IL_0006: ret
@@ -37,9 +38,11 @@
 		// Code size: 8 (0x8)
 		.maxstack 8
 
+		// <Value>k__BackingField = value;
 		IL_0000: ldarg.0
 		IL_0001: ldarg.1
 		IL_0002: stfld int32 AutoPropertyExample::'<Value>k__BackingField'
+		// }
 		IL_0007: ret
 	} // end of method AutoPropertyExample::set_Value
 
@@ -51,7 +54,9 @@
 		// Code size: 7 (0x7)
 		.maxstack 8
 
+		// {
 		IL_0000: ldarg.0
+		// }
 		IL_0001: call instance void [System.Runtime]System.Object::.ctor()
 		IL_0006: ret
 	} // end of method AutoPropertyExample::.ctor

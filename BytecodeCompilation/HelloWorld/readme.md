@@ -1,4 +1,7 @@
 # Hello World
 Simple Hello World application.
 
-`dotnet run --configuration Release`
+Run the application using:
+```
+dotnet run --configuration Release
+```
