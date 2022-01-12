@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BytecodeInspection": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
