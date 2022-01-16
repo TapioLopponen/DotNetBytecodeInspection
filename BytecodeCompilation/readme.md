@@ -9,3 +9,6 @@ C# property and auto-property examples and compiled CIL versions.
 
 ### Foreach
 The `foreach` statement exists in C# but not in CIL.
+
+### Lowering
+Lowering/desugaring is used to remove syntactic sugar during bytecode compilation.

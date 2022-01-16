@@ -1,9 +1,9 @@
 # Foreach Statement
 [The `foreach` statement](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/statements#the-foreach-statement) iterates over a collection by retrieving a enumerator object from the collection using a `GetEnumerator()` method. The enumerator object must implement a `Current` property and `MoveNext()` method. These are matched by the compiler based on their signatures during compilation.
 
-The included example are simplified versions of real-life implementations. The `Collection` is an example of an array-based data structure with an enumerator. The `LinkedList` is an example of a non-array-based data structure with an enumerator. Both examples use a nested `struct` to implement the enumerator.
+The included example are simplified versions of real-life implementations. The `Collection` class is an example of an array-based data structure with an enumerator. The `LinkedList` class is an example of a non-array-based data structure with an enumerator. Both examples use a nested `struct` to implement the enumerator.
 
-For actual implementations see:
+For real-life implementations see:
  - [`List<T>`](https://referencesource.microsoft.com/#mscorlib/system/collections/generic/list.cs) and [`List<T>.Enumerator`](https://referencesource.microsoft.com/#mscorlib/system/collections/generic/list.cs,9c3d580a8b7a8fe8)
  - [`LinkedList<T>`](https://referencesource.microsoft.com/#System/compmod/system/collections/generic/linkedlist.cs) and [`LinkedList<T>.Enumerator`](https://referencesource.microsoft.com/#System/compmod/system/collections/generic/linkedlist.cs,674b2c2e532e0349)
 
