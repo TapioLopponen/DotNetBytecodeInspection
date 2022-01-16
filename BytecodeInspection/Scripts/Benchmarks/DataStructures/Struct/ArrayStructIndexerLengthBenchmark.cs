@@ -3,15 +3,14 @@ using BytecodeInspection.DataStructures;
 
 namespace BytecodeInspection.Benchmarks
 {
-    [MemoryDiagnoser(false)]
-    public class ArrayStructPropertyIndexerBenchmark : Benchmark
+    public class ArrayStructIndexerLength : Benchmark
     {
-        private ArrayStructPropertyIndexer<int> m_array;
+        private ArrayStructIndexerLength<int> m_array;
 
         [GlobalSetup]
         public void Setup()
         {
-            m_array = new ArrayStructPropertyIndexer<int>(ItemCount);
+            m_array = new ArrayStructIndexerLength<int>(ItemCount);
             for(int i = 0; i < ItemCount; i++)
             {
                 m_array[i] = i;
@@ -30,17 +29,6 @@ namespace BytecodeInspection.Benchmarks
         }
 
         [Benchmark]
-        public int Sum_ForEach()
-        {
-            var sum = 0;
-            foreach(var v in m_array.Items)
-            {
-                sum += v;
-            }
-            return sum;
-        }
-
-        [Benchmark]
         public int Sum_For_CacheLen()
         {
             var sum = 0;
@@ -53,12 +41,47 @@ namespace BytecodeInspection.Benchmarks
         }
 
         [Benchmark]
-        public int Sum_For_CacheLen_CacheArray()
+        public int Sum_For_LocalRef()
+        {
+            var sum = 0;
+            var arr = m_array;
+            for(int i = 0; i < arr.Length; i++)
+            {
+                sum += arr[i];
+            }
+            return sum;
+        }
+
+        [Benchmark]
+        public int Sum_For_CacheLen_LocalRef()
         {
             var sum = 0;
             var len = m_array.Length;
-            var arr = m_array.Items;
+            var arr = m_array;
             for(int i = 0; i < len; i++)
+            {
+                sum += arr[i];
+            }
+            return sum;
+        }
+
+        [Benchmark]
+        public int Sum_For_Reverse()
+        {
+            var sum = 0;
+            for(int i = m_array.Length - 1; i >= 0; i--)
+            {
+                sum += m_array[i];
+            }
+            return sum;
+        }
+
+        [Benchmark]
+        public int Sum_For_Reverse_LocalRef()
+        {
+            var sum = 0;
+            var arr = m_array;
+            for(int i = arr.Length - 1; i >= 0; i--)
             {
                 sum += arr[i];
             }

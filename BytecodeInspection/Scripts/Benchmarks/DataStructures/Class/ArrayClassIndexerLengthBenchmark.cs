@@ -3,14 +3,14 @@ using BytecodeInspection.DataStructures;
 
 namespace BytecodeInspection.Benchmarks
 {
-    public class ArrayClassIndexerBenchmark : Benchmark
+    public class ArrayClassIndexerLength : Benchmark
     {
-        private ArrayClassIndexer<int> m_array;
+        private ArrayClassIndexerLength<int> m_array;
 
         [GlobalSetup]
         public void Setup()
         {
-            m_array = new ArrayClassIndexer<int>(ItemCount);
+            m_array = new ArrayClassIndexerLength<int>(ItemCount);
             for(int i = 0; i < ItemCount; i++)
             {
                 m_array[i] = i;
@@ -46,6 +46,19 @@ namespace BytecodeInspection.Benchmarks
             var sum = 0;
             var arr = m_array;
             for(int i = 0; i < arr.Length; i++)
+            {
+                sum += arr[i];
+            }
+            return sum;
+        }
+
+        [Benchmark]
+        public int Sum_For_CacheLen_LocalRef()
+        {
+            var sum = 0;
+            var len = m_array.Length;
+            var arr = m_array;
+            for(int i = 0; i < len; i++)
             {
                 sum += arr[i];
             }

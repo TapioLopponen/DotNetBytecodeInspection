@@ -3,7 +3,6 @@ using BytecodeInspection.DataStructures;
 
 namespace BytecodeInspection.Benchmarks
 {
-    [MemoryDiagnoser(false)]
     public class ArrayStructIndexerBenchmark : Benchmark
     {
         private ArrayStructIndexer<int> m_array;
@@ -37,6 +36,54 @@ namespace BytecodeInspection.Benchmarks
             for(int i = 0; i < len; i++)
             {
                 sum += m_array[i];
+            }
+            return sum;
+        }
+
+        [Benchmark]
+        public int Sum_For_LocalRef()
+        {
+            var sum = 0;
+            var arr = m_array;
+            for(int i = 0; i < arr.Length; i++)
+            {
+                sum += arr[i];
+            }
+            return sum;
+        }
+
+        [Benchmark]
+        public int Sum_For_CacheLen_LocalRef()
+        {
+            var sum = 0;
+            var len = m_array.Length;
+            var arr = m_array;
+            for(int i = 0; i < len; i++)
+            {
+                sum += arr[i];
+            }
+            return sum;
+        }
+
+        [Benchmark]
+        public int Sum_For_Reverse()
+        {
+            var sum = 0;
+            for(int i = m_array.Length - 1; i >= 0; i--)
+            {
+                sum += m_array[i];
+            }
+            return sum;
+        }
+
+        [Benchmark]
+        public int Sum_For_Reverse_LocalRef()
+        {
+            var sum = 0;
+            var arr = m_array;
+            for(int i = arr.Length - 1; i >= 0; i--)
+            {
+                sum += arr[i];
             }
             return sum;
         }

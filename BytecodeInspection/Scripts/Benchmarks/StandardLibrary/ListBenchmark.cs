@@ -53,7 +53,19 @@ namespace BytecodeInspection.Benchmarks
         }
 
         [Benchmark]
-        public int Sum_For_CacheLen_CacheList()
+        public int Sum_For_LocalRef()
+        {
+            var sum = 0;
+            var list = m_list;
+            for(int i = 0; i < list.Count; i++)
+            {
+                sum += list[i];
+            }
+            return sum;
+        }
+
+        [Benchmark]
+        public int Sum_For_CacheLen_LocalRef()
         {
             var sum = 0;
             var len = m_list.Count;
@@ -77,7 +89,7 @@ namespace BytecodeInspection.Benchmarks
         }
 
         [Benchmark]
-        public int Sum_For_Reverse_CacheList()
+        public int Sum_For_Reverse_LocalRef()
         {
             var sum = 0;
             var list = m_list;
@@ -86,6 +98,48 @@ namespace BytecodeInspection.Benchmarks
                 sum += list[i];
             }
             return sum;
+        }
+
+        [Benchmark]
+        public int Static_Sum_For()
+        {
+            return StaticListBenchmark.Sum_For(m_list);
+        }
+
+        [Benchmark]
+        public int Static_Sum_ForEach()
+        {
+            return StaticListBenchmark.Sum_ForEach(m_list);
+        }
+
+        [Benchmark]
+        public int Static_Sum_For_CacheLen()
+        {
+            return StaticListBenchmark.Sum_For_CacheLen(m_list);
+        }
+
+        [Benchmark]
+        public int Static_Sum_For_LocalRef()
+        {
+            return StaticListBenchmark.Sum_For_LocalRef(m_list);
+        }
+
+        [Benchmark]
+        public int Static_Sum_For_CacheLen_LocalRef()
+        {
+            return StaticListBenchmark.Sum_For_CacheLen_LocalRef(m_list);
+        }
+
+        [Benchmark]
+        public int Static_Sum_For_Reverse()
+        {
+            return StaticListBenchmark.Sum_For_Reverse(m_list);
+        }
+
+        [Benchmark]
+        public int Static_Sum_For_Reverse_LocalRef()
+        {
+            return StaticListBenchmark.Sum_For_Reverse_LocalRef(m_list);
         }
     }
 }

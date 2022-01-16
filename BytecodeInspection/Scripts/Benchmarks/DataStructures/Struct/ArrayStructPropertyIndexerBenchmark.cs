@@ -3,14 +3,15 @@ using BytecodeInspection.DataStructures;
 
 namespace BytecodeInspection.Benchmarks
 {
-    public class ArrayClassIndexerBenchmark : Benchmark
+    [MemoryDiagnoser(false)]
+    public class ArrayStructPropertyIndexerBenchmark : Benchmark
     {
-        private ArrayClassIndexer<int> m_array;
+        private ArrayStructPropertyIndexer<int> m_array;
 
         [GlobalSetup]
         public void Setup()
         {
-            m_array = new ArrayClassIndexer<int>(ItemCount);
+            m_array = new ArrayStructPropertyIndexer<int>(ItemCount);
             for(int i = 0; i < ItemCount; i++)
             {
                 m_array[i] = i;
@@ -24,6 +25,17 @@ namespace BytecodeInspection.Benchmarks
             for(int i = 0; i < m_array.Length; i++)
             {
                 sum += m_array[i];
+            }
+            return sum;
+        }
+
+        [Benchmark]
+        public int Sum_ForEach()
+        {
+            var sum = 0;
+            foreach(var v in m_array.Items)
+            {
+                sum += v;
             }
             return sum;
         }
@@ -44,8 +56,21 @@ namespace BytecodeInspection.Benchmarks
         public int Sum_For_LocalRef()
         {
             var sum = 0;
-            var arr = m_array;
+            var arr = m_array.Items;
             for(int i = 0; i < arr.Length; i++)
+            {
+                sum += arr[i];
+            }
+            return sum;
+        }
+
+        [Benchmark]
+        public int Sum_For_CacheLen_LocalRef()
+        {
+            var sum = 0;
+            var len = m_array.Length;
+            var arr = m_array.Items;
+            for(int i = 0; i < len; i++)
             {
                 sum += arr[i];
             }
@@ -67,7 +92,7 @@ namespace BytecodeInspection.Benchmarks
         public int Sum_For_Reverse_LocalRef()
         {
             var sum = 0;
-            var arr = m_array;
+            var arr = m_array.Items;
             for(int i = arr.Length - 1; i >= 0; i--)
             {
                 sum += arr[i];

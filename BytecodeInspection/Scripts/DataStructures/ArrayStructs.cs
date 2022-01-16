@@ -55,4 +55,23 @@
             set => Items[index] = value;
         }
     }
+
+    public struct ArrayStructIndexerLength<T>
+    {
+        private readonly T[] m_items;
+
+        public ArrayStructIndexerLength(int capacity)
+        {
+            m_items = new T[capacity];
+            Length = capacity;
+        }
+
+        public int Length { get; }
+
+        public T this[int index]
+        {
+            get => m_items[index];
+            set => m_items[index] = value;
+        }
+    }
 }

@@ -52,7 +52,19 @@ namespace BytecodeInspection.Benchmarks
         }
 
         [Benchmark]
-        public int Sum_For_CacheLen_CacheArray()
+        public int Sum_For_LocalRef()
+        {
+            var sum = 0;
+            var arr = m_array;
+            for(int i = 0; i < arr.Length; i++)
+            {
+                sum += arr[i];
+            }
+            return sum;
+        }
+
+        [Benchmark]
+        public int Sum_For_CacheLen_LocalRef()
         {
             var sum = 0;
             var len = m_array.Length;
@@ -75,9 +87,8 @@ namespace BytecodeInspection.Benchmarks
             return sum;
         }
 
-
         [Benchmark]
-        public int Sum_For_Reverse_CacheArray()
+        public int Sum_For_Reverse_LocalRef()
         {
             var sum = 0;
             var arr = m_array;
@@ -86,6 +97,48 @@ namespace BytecodeInspection.Benchmarks
                 sum += arr[i];
             }
             return sum;
+        }
+
+        [Benchmark]
+        public int Static_Sum_For()
+        {
+            return StaticArrayBenchmark.Sum_For(m_array);
+        }
+
+        [Benchmark]
+        public int Static_Sum_ForEach()
+        {
+            return StaticArrayBenchmark.Sum_ForEach(m_array);
+        }
+
+        [Benchmark]
+        public int Static_Sum_For_CacheLen()
+        {
+            return StaticArrayBenchmark.Sum_For_CacheLen(m_array);
+        }
+
+        [Benchmark]
+        public int Static_Sum_For_LocalRef()
+        {
+            return StaticArrayBenchmark.Sum_For_LocalRef(m_array);
+        }
+
+        [Benchmark]
+        public int Static_Sum_For_CacheLen_LocalRef()
+        {
+            return StaticArrayBenchmark.Sum_For_CacheLen_LocalRef(m_array);
+        }
+
+        [Benchmark]
+        public int Static_Sum_For_Reverse()
+        {
+            return StaticArrayBenchmark.Sum_For_Reverse(m_array);
+        }
+
+        [Benchmark]
+        public int Static_Sum_For_Reverse_LocalRef()
+        {
+            return StaticArrayBenchmark.Sum_For_Reverse_LocalRef(m_array);
         }
     }
 }
