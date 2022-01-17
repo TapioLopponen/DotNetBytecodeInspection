@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using System.Collections.Generic;
+using BenchmarkClass = BytecodeInspection.Benchmarks.StaticListBenchmark;
 
 namespace BytecodeInspection.Benchmarks
 {
@@ -103,43 +104,43 @@ namespace BytecodeInspection.Benchmarks
         [Benchmark]
         public int Static_Sum_For()
         {
-            return StaticListBenchmark.Sum_For(m_list);
+            return BenchmarkClass.Sum_For(m_list);
         }
 
         [Benchmark]
         public int Static_Sum_ForEach()
         {
-            return StaticListBenchmark.Sum_ForEach(m_list);
+            return BenchmarkClass.Sum_ForEach(m_list);
         }
 
         [Benchmark]
         public int Static_Sum_For_CacheLen()
         {
-            return StaticListBenchmark.Sum_For_CacheLen(m_list);
+            return BenchmarkClass.Sum_For_CacheLen(m_list);
         }
 
         [Benchmark]
         public int Static_Sum_For_LocalRef()
         {
-            return StaticListBenchmark.Sum_For_LocalRef(m_list);
+            return BenchmarkClass.Sum_For_LocalRef(m_list);
         }
 
         [Benchmark]
         public int Static_Sum_For_CacheLen_LocalRef()
         {
-            return StaticListBenchmark.Sum_For_CacheLen_LocalRef(m_list);
+            return BenchmarkClass.Sum_For_CacheLen_LocalRef(m_list);
         }
 
         [Benchmark]
         public int Static_Sum_For_Reverse()
         {
-            return StaticListBenchmark.Sum_For_Reverse(m_list);
+            return BenchmarkClass.Sum_For_Reverse(m_list);
         }
 
         [Benchmark]
         public int Static_Sum_For_Reverse_LocalRef()
         {
-            return StaticListBenchmark.Sum_For_Reverse_LocalRef(m_list);
+            return BenchmarkClass.Sum_For_Reverse_LocalRef(m_list);
         }
     }
 }

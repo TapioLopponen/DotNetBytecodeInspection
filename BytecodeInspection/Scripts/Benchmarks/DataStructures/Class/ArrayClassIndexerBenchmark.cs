@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BytecodeInspection.DataStructures;
+using BenchmarkClass = BytecodeInspection.Benchmarks.SaticArrayClassIndexerBenchmark;
 
 namespace BytecodeInspection.Benchmarks
 {
@@ -53,6 +54,19 @@ namespace BytecodeInspection.Benchmarks
         }
 
         [Benchmark]
+        public int Sum_For_CacheLen_LocalRef()
+        {
+            var sum = 0;
+            var len = m_array.Length;
+            var arr = m_array;
+            for(int i = 0; i < len; i++)
+            {
+                sum += arr[i];
+            }
+            return sum;
+        }
+
+        [Benchmark]
         public int Sum_For_Reverse()
         {
             var sum = 0;
@@ -73,6 +87,42 @@ namespace BytecodeInspection.Benchmarks
                 sum += arr[i];
             }
             return sum;
+        }
+
+        [Benchmark]
+        public int Static_Sum_For()
+        {
+            return BenchmarkClass.Sum_For(m_array);
+        }
+
+        [Benchmark]
+        public int Static_Sum_For_CacheLen()
+        {
+            return BenchmarkClass.Sum_For_CacheLen(m_array);
+        }
+
+        [Benchmark]
+        public int Static_Sum_For_LocalRef()
+        {
+            return BenchmarkClass.Sum_For_LocalRef(m_array);
+        }
+
+        [Benchmark]
+        public int Static_Sum_For_CacheLen_LocalRef()
+        {
+            return BenchmarkClass.Sum_For_CacheLen_LocalRef(m_array);
+        }
+
+        [Benchmark]
+        public int Static_Sum_For_Reverse()
+        {
+            return BenchmarkClass.Sum_For_Reverse(m_array);
+        }
+
+        [Benchmark]
+        public int Static_Sum_For_Reverse_LocalRef()
+        {
+            return BenchmarkClass.Sum_For_Reverse_LocalRef(m_array);
         }
     }
 }
