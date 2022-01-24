@@ -4,7 +4,7 @@ using BenchmarkClass = BytecodeInspection.Benchmarks.SaticArrayClassIndexerLengt
 
 namespace BytecodeInspection.Benchmarks
 {
-    public class ArrayClassIndexerLength : Benchmark
+    public class ArrayClassIndexerLengthBenchmark : Benchmark
     {
         private ArrayClassIndexerLength<int> m_array;
 
