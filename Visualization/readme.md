@@ -5,7 +5,7 @@ The script draws various error bars from the .csv files in the target `../Result
 
 ### Setup
 #### Windows
-```ps
+```bash
 # Create virtual environment.
 py -m venv ./venv/
 # Active virtual environment.
@@ -16,7 +16,7 @@ pip install -r requirements.txt
 py main.py
 ```
 #### Mac
-```ps
+```bash
 # Create virtual environment.
 python3 -m venv venv
 # Active virtual environment.
