@@ -8,3 +8,8 @@ The `/BytecodeCompilation/` folder contains applications in C# and disassembled 
 
 ## Bytecode Inspection.
 The `/BytecodeInspection/` folder contains various benchmarks. These benchmarks can be used to compare the performance effects of various syntactic features.
+
+## Other
+The `/Results/` folder contains full benchmark results with three different input sizes. 
+
+The `/Visualization/` folder contains python scripts to visualize the results.
