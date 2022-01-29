@@ -31,7 +31,7 @@ def format_method(method: str) -> str:
     }.get(method, method.replace('_', ' '))
 
 def update_time_units(time_unit: str, df: pd.DataFrame) -> Tuple[str, pd.DataFrame]:
-    ''' Convert into larger time units.
+    ''' Convert time units into larger time units if required.
         s    second         1
         ms   millisecond    0.001
         μs   microsecond    0.000001
@@ -122,13 +122,13 @@ def print_generating(name: str, colors: List[str], csv: List[str]):
         for (c, i) in zip(colors, csv):
             print(f'\t[{c}] {i}')
 
-def grouped_error_bar(name: str, colors: List[str], csv: List[str], exclude: List[str] = None):
+def grouped_error_bar(name: str, colors: List[str], csv: List[str], exclude: List[str] = None, subfolder: str = ''):
     ''' Draw one or more error bars
         :param name: Benchmark result name.
         :param colors: List of colors for input files.
         :param csv: List of input files.
     '''
-    assert len(colors) == len(csv), 'Uneven color to input count'
+    assert len(colors) == len(csv), f'Uneven color to input count. Expected {len(csv)} received {len(colors)}.'
     print_generating(name, colors, csv)
     # Initialize local variables.
     time_unit = None
@@ -168,9 +168,7 @@ def grouped_error_bar(name: str, colors: List[str], csv: List[str], exclude: Lis
         offset = start_offset + (step * i)
         df['Method'] = df['Method'].apply(lambda x : unique_methods.index(x) + offset)
         # Display standard deviation 'Standard deviation of all measurements'.
-        #ax.errorbar(df['Method'], df['Mean'], df['StdDev'], fmt='o', color = color, lw = 1, capsize=3)
-        # Display error 'Half of 99.9% confidence interval'.
-        ax.errorbar(df['Method'], df['Mean'], df['Error'], fmt = fmt, color = color, lw = 1)
+        ax.errorbar(df['Method'], df['Mean'], df['StdDev'], fmt = fmt, color = color, lw = 1)
         if color not in visited:
             # Draw empty plots with label to populate the groups based on the color.
             plt.plot([], color = color, label=df.name)
@@ -191,8 +189,22 @@ def grouped_error_bar(name: str, colors: List[str], csv: List[str], exclude: Lis
     plt.legend()
     
     fig.tight_layout()
-    plt.savefig(f'./img/{name}({sample_size}).png')
+    plt.savefig(f'{get_image_folder_path(subfolder)}{name}({sample_size}).png')
     plt.close()
+
+def get_image_folder_path(subfolder: str) -> str:
+    ''' Get the the results folder path.
+        The results folder is automatically created if it does not exist.
+        :param subfolder: Possible subfolder.
+        :return: Relative path the the result folder.
+    '''
+    path = f'./img/{sample_size}/'
+    if subfolder != '':
+        path = f'{path}{subfolder}/'
+    # Create folder for result images.
+    if not os.path.isdir(path):
+        os.makedirs(path)
+    return path
 
 def error_bar_for_each_result():
     ''' Draw error bar for each '.csv' file in the result folder.
@@ -202,17 +214,29 @@ def error_bar_for_each_result():
     # Create error bar for each benchmark result.
     for file in files:
         benchmark_name = file.replace('BytecodeInspection.Benchmarks.', '').replace('-report.csv', '')
-        grouped_error_bar(benchmark_name, ['black'], [file])
+        grouped_error_bar(benchmark_name, ['black'], [file], subfolder = '/single/')
 
 def report_from_class_name(names: List[str]) -> List[str]:
     ''' Convert class name into result file name.
     '''
     return [f'BytecodeInspection.Benchmarks.{name}Benchmark-report.csv' for name in names]
 
+def print_formated(sources: List[str]):
+    ''' Print out formatted: Method, Mean, and StdDev columns.
+        :param source: List of source file names.
+    '''
+    df1: pd.DataFrame
+    df2: pd.DataFrame
+    columns = ['Method', 'Mean', 'StdDev']
+    for src in sources:
+        df1, df2, tu = get_data_frames(f'{result_folder_path}{src}', sample_size)
+        print('General Information:\n\tSource:', src, '\n\tTime Units:', tu)
+        print('Methods:')
+        print(df1.to_string(columns = columns).replace('.', ','))
+        print('Static Methods:')
+        print(df2.to_string(columns = columns).replace('.', ','))
+
 if __name__ == "__main__":
-    # Create folder for result images.
-    if not os.path.isdir('./img/'):
-        os.mkdir('./img/')
     # Make sure that the current result folder exists.
     if not os.path.isdir(result_folder_path):
         print('Unable to locate target folder contain benchmarking results!')
@@ -229,9 +253,9 @@ if __name__ == "__main__":
               '#BCBD22']
     for i in [1_000, 10_000, 100_000]:
         sample_size = i
-        
+
         # Draw error bar for each results.
-        error_bar_for_each_result()
+        #error_bar_for_each_result()
 
         # Baseline Benchmarks.
         grouped_error_bar('ArrayList',
@@ -255,8 +279,7 @@ if __name__ == "__main__":
                 'ArrayClass',
                 'ArrayClassProperty',
                 'ArrayClassIndexer'
-            ]),
-            ['B'])
+            ]))
         grouped_error_bar('ClassFieldPropertyIndexer_C-G',
             colors[:3],
             report_from_class_name([
@@ -265,16 +288,7 @@ if __name__ == "__main__":
                 'ArrayClassIndexer'
             ]),
             ['A', 'B'])
-        grouped_error_bar('Classes',
-            colors[:5],
-            report_from_class_name([
-                'ArrayClass',
-                'ArrayClassProperty',
-                'ArrayClassIndexer',
-                'ArrayClassPropertyIndexer',
-                'ArrayClassIndexerLength',
-            ]))
-        
+
         # Structs.
         grouped_error_bar('StructFieldPropertyIndexer',
             colors[:3],
@@ -282,8 +296,7 @@ if __name__ == "__main__":
                 'ArrayStruct',
                 'ArrayStructProperty',
                 'ArrayStructIndexer'
-            ]),
-            ['B'])
+            ]))
         grouped_error_bar('StructFieldPropertyIndexer_C-G',
             colors[:3],
             report_from_class_name([
@@ -292,12 +305,3 @@ if __name__ == "__main__":
                 'ArrayStructIndexer'
             ]),
             ['A', 'B'])
-        grouped_error_bar('Structs',
-            colors[:5],
-            report_from_class_name([
-                'ArrayStruct',
-                'ArrayStructProperty',
-                'ArrayStructIndexer',
-                'ArrayStructPropertyIndexer',
-                'ArrayStructIndexerLength',
-            ]))
