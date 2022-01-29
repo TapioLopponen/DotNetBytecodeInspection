@@ -25,6 +25,20 @@ while(enumerator.GetNext()) {
 ```
 _Code example 1._ `foreach` before and after compilation.
 
+```cs
+private int[] m_array; 
+public int ReplicateForeach() {
+    var sum = 0;
+    var arr = m_array;
+    for(int i = 0; i < arr.Length; i++) {
+        var v = arr[i];
+        sum += v;
+    }
+    return sum;
+}
+```
+_Code example 2._ `for` loop that generates matching bytecode to `foreach` when enumerating an array.
+
 Run the application using:
 ```
 dotnet run --configuration Release
