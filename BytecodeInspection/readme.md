@@ -82,6 +82,8 @@ The `/Scripts/DataStructures/` folder contains `class` and `struct` versions of 
 
 ## Running Benchmarks
 
+> Additional user rights may be required to achieve the best results.
+
 Run all benchmarks:  
 ```
 dotnet run --configuration Release
