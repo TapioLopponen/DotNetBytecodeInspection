@@ -4,8 +4,8 @@
 The included example are simplified versions of real-life implementations. The `Collection` class is an example of an array-based data structure with an enumerator. The `LinkedList` class is an example of a non-array-based data structure with an enumerator. Both examples use a nested `struct` to implement the enumerator.
 
 For real-life implementations see:
- - [`List<T>`](https://referencesource.microsoft.com/#mscorlib/system/collections/generic/list.cs) and [`List<T>.Enumerator`](https://referencesource.microsoft.com/#mscorlib/system/collections/generic/list.cs,9c3d580a8b7a8fe8)
- - [`LinkedList<T>`](https://referencesource.microsoft.com/#System/compmod/system/collections/generic/linkedlist.cs) and [`LinkedList<T>.Enumerator`](https://referencesource.microsoft.com/#System/compmod/system/collections/generic/linkedlist.cs,674b2c2e532e0349)
+ - [`List<T>`](https://source.dot.net/#System.Private.CoreLib/List.cs) and [`List<T>.Enumerator`](https://source.dot.net/#System.Private.CoreLib/List.cs,1102)
+ - [`LinkedList<T>`](https://source.dot.net/#System.Collections/System/Collections/Generic/LinkedList.cs) and [`LinkedList<T>.Enumerator`](https://source.dot.net/#System.Collections/System/Collections/Generic/LinkedList.cs,499)
 
 The `foreach` statement is compiled into a while loop, which uses the enumerators `MoveNext()` method as the condition and the `Current` property to access the current value. The `MoveNext()` method updates the value accessible in the `Current` property. An example of the transformation can be seen in Code example 1.
 
